@@ -1,0 +1,30 @@
+@import 'global.scss';
+
+header, .app-footer {
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
+header {
+  border-bottom: 1px solid gray;
+
+  .navbar-start h1 {
+    display: flex;
+    align-items: center;
+  }
+}
+
+main {
+  margin: 0 1rem;
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+
+.app-footer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 3rem;
+  border-top: 1px solid gray;
+}
+

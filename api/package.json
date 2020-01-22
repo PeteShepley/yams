@@ -2,13 +2,22 @@
   "name": "api",
   "version": "1.0.0",
   "description": "",
-  "main": "handler.js",
+  "main": "src/lambda.js",
   "scripts": {
+    "start": "serverless offline",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "serverless": "^1.61.3"
+    "aws-serverless-express": "^3.3.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8"
+  },
+  "devDependencies": {
+    "serverless": "^1.61.3",
+    "serverless-offline": "^5.12.1"
   }
 }
