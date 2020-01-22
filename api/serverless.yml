@@ -16,8 +16,7 @@ custom:
 
 functions:
   api:
-    handler: lambda.handler
+    handler: src/lambda.handler
     events:
-      - http:
-          path: /{proxy+}
-          method: get
+      - http: GET /{proxy+}
+      - http: POST /{proxy+}

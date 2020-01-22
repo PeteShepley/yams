@@ -8,9 +8,14 @@ header, .app-footer {
 header {
   border-bottom: 1px solid gray;
 
-  .navbar-start h1 {
+  .navbar-brand h1 {
     display: flex;
     align-items: center;
+    margin-right: 2rem;
+  }
+
+  .active {
+    background-color: #CCCCCC;
   }
 }
 
@@ -18,6 +23,19 @@ main {
   margin: 0 1rem;
   flex-grow: 1;
   overflow-y: scroll;
+
+  .loading-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    background-color: #99999988;
+  }
 }
 
 .app-footer {

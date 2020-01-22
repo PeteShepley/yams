@@ -7,6 +7,24 @@
 
     .card {
       margin: 1rem;
+
+      .card-image {
+        .movie-title {
+          position: absolute;
+          bottom: 0;
+          opacity: 0;
+          background-color: white;
+          width: 100%;
+          transition: opcacity 500ms;
+        }
+      }
+
+      .card-image:hover {
+        .movie-title {
+          opacity: 0.8;
+          transition: opacity 500ms;
+        }
+      }
     }
   }
 }
