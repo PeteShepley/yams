@@ -19,4 +19,9 @@ functions:
     handler: src/lambda.handler
     events:
       - http: GET /{proxy+}
+      - http: HEAD /{proxy+}
+      - http: OPTIONS /{proxy+}
       - http: POST /{proxy+}
+      - http: PUT /{proxy+}
+      - http: DELETE /{proxy+}
+
