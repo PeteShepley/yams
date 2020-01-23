@@ -17,23 +17,25 @@ class MovieData {
     return request(options);
   }
 
-  async getPopularList() {
+  async getPopularList(page) {
     const options = {
       uri: `${this.apiBase}/movie/popular`,
       qs: {
-        api_key: this.apiKey
+        api_key: this.apiKey,
+        page
       },
       json: true
     };
     return request(options);
   }
 
-  async search(query) {
+  async search(query, page) {
     const options = {
       uri: `${this.apiBase}/search/movie`,
       qs: {
         api_key: this.apiKey,
-        query: query
+        query: query,
+        page
       },
       json: true
     };
@@ -48,7 +50,13 @@ class MovieData {
       },
       json: true
     };
-    return request(options);
+    const movie = await request(options);
+
+    options.uri = `${this.apiBase}/movie/${movieId}/credits`;
+    const credits = await request(options);
+    movie.credits = credits;
+
+    return movie;
   }
 }
 

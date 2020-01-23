@@ -50,7 +50,8 @@ export class MovieList extends React.Component<MovieListProps> {
     const end = element.scrollHeight - element.offsetHeight;
 
     if (top >= end - 100) {
-      console.log('load more items');
+      this.context.loading = true;
+      this.context.loadMore().then(() => this.context.loading = false);
     }
   }
 
