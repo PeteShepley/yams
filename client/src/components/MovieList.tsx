@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import * as debounce from 'debounce';
 
 import { Movie } from '../data/MovieData';
 import { MovieDataContext } from '../data/MovieDataContext';
@@ -38,12 +39,27 @@ interface MovieListProps {
 export class MovieList extends React.Component<MovieListProps> {
   static contextType = MovieDataContext;
 
+  constructor(props: any) {
+    super(props);
+    this.updateScroll = debounce(this.updateScroll, 250);
+  }
+
+  updateScroll(element: any) {
+    // Borrowed logic from react-scroll-detector (https://github.com/rechat/react-scroll-detector)
+    const top = element.scrollTop - element.clientTop;
+    const end = element.scrollHeight - element.offsetHeight;
+
+    if (top >= end - 100) {
+      console.log('load more items');
+    }
+  }
+
   render() {
     const movieData = this.context;
     return (
         <div className="movie-list">
           <h2 className="subtitle is-4">Movies</h2>
-          <div className="list">
+          <div className="list" onScroll={(event) => this.updateScroll(event.target)}>
             {movieData.movies.map((movie: Movie, index: number) =>
                 <MoviePoster key={index} movie={movie}/>
             )}

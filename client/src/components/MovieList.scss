@@ -1,9 +1,17 @@
 
 .movie-list {
+  flex-grow: 1;
+
+  display:flex;
+  flex-direction: column;
 
   .list {
+    flex-grow: 1;
+    flex-basis: 1px;
+
     display: flex;
     flex-wrap: wrap;
+    overflow-y: auto;
 
     .card {
       margin: 1rem;

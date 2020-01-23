@@ -5,10 +5,10 @@ import { MovieList } from '../components/MovieList';
 export class Home extends React.Component<any, any> {
   public render(): any {
     return (
-        <div>
-          <MovieSearch />
-          <MovieList />
-        </div>
+        <React.Fragment>
+          <MovieSearch/>
+          <MovieList/>
+        </React.Fragment>
     );
   }
 }

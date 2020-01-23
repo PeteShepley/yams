@@ -20,9 +20,10 @@ header {
 }
 
 main {
+  display: flex;
+  flex-direction: column;
+
   margin: 0 1rem;
-  flex-grow: 1;
-  overflow-y: scroll;
 
   .loading-area {
     display: flex;
