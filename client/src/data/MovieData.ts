@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx';
 
-const BASE_API = 'http://localhost:8080';
-// const BASE_API = 'https://js1jnc0mrj.execute-api.us-east-1.amazonaws.com/dev';
+// const BASE_API = 'http://localhost:8080';
+const BASE_API = 'https://js1jnc0mrj.execute-api.us-east-1.amazonaws.com/dev';
 
 export interface Movie {
   id: string;
@@ -35,7 +35,10 @@ export class MovieData {
 
   @action
   public async loadPopularMovies(): Promise<void> {
-    if (this.lastQueryType !== 'popular') this.movies = [];
+    if (this.lastQueryType !== 'popular') {
+      this.movies = [];
+      this.currentPage = 0;
+    }
 
     const response = await fetch(`${BASE_API}/popular?page=${this.currentPage+1}`).then(response => response.json());
     this.currentPage = response.page;
@@ -45,7 +48,10 @@ export class MovieData {
 
   @action
   public async search(searchTerm: string): Promise<void> {
-    if (this.lastQueryType !== 'search') this.movies = [];
+    if (this.lastQueryType !== 'search' || this.lastQuery !== searchTerm) {
+      this.movies = [];
+      this.currentPage = 0;
+    }
     const body = JSON.stringify({query: searchTerm});
     const request = new Request(`${BASE_API}/search?page=${this.currentPage+1}`, {method: 'post', body: body, headers: {'Content-Type': 'application/json'}});
     const response = await fetch(request).then(response => response.json());
