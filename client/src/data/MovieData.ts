@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx';
 
-// const BASE_API = 'http://localhost:8080';
-const BASE_API = 'https://js1jnc0mrj.execute-api.us-east-1.amazonaws.com/dev';
+const BASE_API = 'http://localhost:8080';
+// const BASE_API = 'https://js1jnc0mrj.execute-api.us-east-1.amazonaws.com/dev';
 
 export interface Movie {
   id: string;
