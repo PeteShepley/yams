@@ -17,7 +17,7 @@
     "request-promise-native": "^1.0.8"
   },
   "devDependencies": {
-    "serverless": "^1.61.3",
+    "serverless": "^1.72.0",
     "serverless-offline": "^5.12.1"
   }
 }
