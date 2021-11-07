@@ -1,59 +1,44 @@
-const request = require('request-promise-native');
+const axios = require("axios");
 
 class MovieData {
   constructor() {
-    this.apiKey = '743c9f95081962b5b20c0158d26fca84';
-    this.apiBase = 'https://api.themoviedb.org/3';
+    this.apiKey = "743c9f95081962b5b20c0158d26fca84";
+    this.apiBase = "https://api.themoviedb.org/3";
   }
 
   async getConfig() {
     const options = {
-      uri: `${this.apiBase}/configuration`,
-      qs: {
-        api_key: this.apiKey
-      },
-      json: true
+      method: "get",
+      url: `${this.apiBase}/configuration?api_key=${this.apiKey}`,
     };
-    return request(options);
+    return axios(options).then((response) => response.data);
   }
 
   async getPopularList(page) {
     const options = {
-      uri: `${this.apiBase}/movie/popular`,
-      qs: {
-        api_key: this.apiKey,
-        page
-      },
-      json: true
+      method: "get",
+      url: `${this.apiBase}/movie/popular?api_key=${this.apiKey}&page=${page}`,
     };
-    return request(options);
+    return axios(options).then((response) => response.data);
   }
 
   async search(query, page) {
     const options = {
-      uri: `${this.apiBase}/search/movie`,
-      qs: {
-        api_key: this.apiKey,
-        query: query,
-        page
-      },
-      json: true
+      method: "get",
+      url: `${this.apiBase}/search/movie?api_key=${this.apiKey}&query=${query}&page=${page}`,
     };
-    return request(options);
+    return axios(options).then((response) => response.data);
   }
 
   async getMovieDetails(movieId) {
     const options = {
-      uri: `${this.apiBase}/movie/${movieId}`,
-      qs: {
-        api_key: this.apiKey
-      },
-      json: true
+      get: "get",
+      url: `${this.apiBase}/movie/${movieId}?api_key=${this.apiKey}`,
     };
-    const movie = await request(options);
+    const movie = await axios(options).then((response) => response.data);
 
-    options.uri = `${this.apiBase}/movie/${movieId}/credits`;
-    const credits = await request(options);
+    options.url = `${this.apiBase}/movie/${movieId}/credits?api_key=${this.apiKey}`;
+    const credits = await axios(options).then((response) => response.data);
     movie.credits = credits;
 
     return movie;
@@ -61,5 +46,5 @@ class MovieData {
 }
 
 module.exports = {
-  MovieData
+  MovieData,
 };
