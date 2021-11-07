@@ -1,6 +1,4 @@
-import * as React from "react";
+import { createContext } from "react";
 import { MovieData } from "./MovieData";
 
-const movieData = new MovieData();
-
-export const MovieDataContext = React.createContext(movieData);
+export const MovieDataContext = createContext<MovieData>(new MovieData());

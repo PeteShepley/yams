@@ -1,19 +1,23 @@
-import { action, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 const BASE_API = "http://localhost:8080";
+
 // const BASE_API = 'https://js1jnc0mrj.execute-api.us-east-1.amazonaws.com/dev';
 
 export interface Movie {
   id: string;
   posterImage: string;
   title: string;
+  poster_path?: string;
+  release_date?: Date;
+  runtime?: string;
+  overview?: string;
+  genres: any[];
+  credits: { crew: any[]; cast: any[] };
 }
 
 export class MovieData {
-  @observable
   public loading: boolean;
-
-  @observable
   public movies: Movie[];
 
   currentPage: number;
@@ -26,19 +30,26 @@ export class MovieData {
     this.currentPage = 0;
     this.lastQueryType = "";
     this.lastQuery = "";
+
+    makeAutoObservable(this);
   }
 
-  @action
-  public async initialize(): Promise<void> {
-    return Promise.all([this.loadPopularMovies()]).then(() =>
-      console.log("MovieData Initialized")
-    );
+  public isLoading(loading: boolean): void {
+    this.loading = loading;
   }
 
-  @action
+  public setMovies(movies: Movie[]): void {
+    this.movies = movies;
+  }
+
+  public initialize(): void {
+    // this.isLoading(true);
+    this.loadPopularMovies(); //.then(() => this.isLoading(false));
+  }
+
   public async loadPopularMovies(): Promise<void> {
     if (this.lastQueryType !== "popular") {
-      this.movies = [];
+      this.setMovies([]);
       this.currentPage = 0;
     }
 
@@ -47,13 +58,12 @@ export class MovieData {
     ).then((response) => response.json());
     this.currentPage = response.page;
     this.lastQueryType = "popular";
-    this.movies = this.movies.concat(response.movies);
+    this.setMovies(this.movies.concat(response.movies));
   }
 
-  @action
   public async search(searchTerm: string): Promise<void> {
     if (this.lastQueryType !== "search" || this.lastQuery !== searchTerm) {
-      this.movies = [];
+      this.setMovies([]);
       this.currentPage = 0;
     }
     const body = JSON.stringify({ query: searchTerm });
@@ -69,23 +79,21 @@ export class MovieData {
     this.currentPage = response.page;
     this.lastQueryType = "search";
     this.lastQuery = searchTerm;
-    this.movies = this.movies.concat(response.movies);
+    this.setMovies(this.movies.concat(response.movies));
   }
 
-  @action
   public async loadMore(): Promise<void> {
+    // this.isLoading(true);
     if (this.lastQueryType === "popular") {
-      return this.loadPopularMovies();
+      return this.loadPopularMovies(); //.then(() => this.isLoading(false));
     } else if (this.lastQueryType === "search") {
-      return this.search(this.lastQuery);
+      return this.search(this.lastQuery); //.then(() => this.isLoading(false));
     }
   }
 
-  @action
-  public async fetchMovie(movieId: number): Promise<any> {
-    const response = await fetch(`${BASE_API}/movie/${movieId}`).then(
-      (response) => response.json()
+  public async fetchMovie(movieId: string): Promise<any> {
+    return await fetch(`${BASE_API}/movie/${movieId}`).then((response) =>
+      response.json()
     );
-    return response;
   }
 }
