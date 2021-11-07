@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { MovieData } from './MovieData';
+import * as React from "react";
+import { MovieData } from "./MovieData";
 
 const movieData = new MovieData();
 

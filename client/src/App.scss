@@ -1,6 +1,7 @@
-@import 'global.scss';
+@import "global.scss";
 
-header, .app-footer {
+header,
+.app-footer {
   margin: 0.5rem;
   padding: 0.5rem;
 }
@@ -15,7 +16,7 @@ header {
   }
 
   .active {
-    background-color: #CCCCCC;
+    background-color: #cccccc;
   }
 }
 
@@ -46,4 +47,3 @@ main {
   min-height: 3rem;
   border-top: 1px solid gray;
 }
-
